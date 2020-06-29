@@ -1,8 +1,9 @@
 start:
+    push 40
     push 10
     push 10
     call show_mr_do
-    add esp, 8
+    add esp, 12
     #stop
  
 ; dword [ebp+ 8] => Row
@@ -21,6 +22,118 @@ for_field:
     jmp for_field
 
 end_for_field:
+    mov ecx, 2
+    mov edx, 2
+
+fruit_outer1:
+    cmp ecx, 8
+    jge end_fruit_outer1
+fruit_inner1:
+    cmp edx, 8
+    je end_fruit_inner1
+    mov esi, ecx ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    
+    mov ebx, 0x0a360a36 ;FRUta
+    mov dword [esi], ebx
+    inc edx
+    jmp fruit_inner1
+end_fruit_inner1:
+    inc ecx
+    mov edx, 2
+    jmp fruit_outer1
+
+end_fruit_outer1:
+    mov ecx, 2
+    mov edx, 60
+
+fruit_outer2:
+    cmp ecx, 10
+    jge end_fruit_outer2
+fruit_inner2:
+    cmp edx, 66
+    je end_fruit_inner2
+    mov esi, ecx ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    
+    mov ebx, 0x0a360a36 ;FRUta
+    mov dword [esi], ebx
+    inc edx
+    jmp fruit_inner2
+end_fruit_inner2:
+    inc ecx
+    mov edx, 60
+    jmp fruit_outer2
+
+end_fruit_outer2:
+    mov ecx, 18
+    mov edx, 56
+
+fruit_outer3:
+    cmp ecx, 22
+    jge end_fruit_outer3
+fruit_inner3:
+    cmp edx, 70
+    je end_fruit_inner3
+    mov esi, ecx ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    
+    mov ebx, 0x0a360a36 ;FRUta
+    mov dword [esi], ebx
+    inc edx
+    jmp fruit_inner3
+end_fruit_inner3:
+    inc ecx
+    mov edx, 56
+    jmp fruit_outer3
+
+end_fruit_outer3:
+    mov ecx, 22
+    mov edx, 12
+
+fruit_outer4:
+    cmp ecx, 26
+    jge end_fruit_outer4
+fruit_inner4:
+    cmp edx, 24
+    je end_fruit_inner4
+    mov esi, ecx ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    
+    mov ebx, 0x0a360a36 ;FRUta
+    mov dword [esi], ebx
+    inc edx
+    jmp fruit_inner4
+end_fruit_inner4:
+    inc ecx
+    mov edx, 12
+    jmp fruit_outer4
+
+end_fruit_outer4:
     mov ecx, 0
 
 upper:
@@ -245,4 +358,3 @@ $delay_loop:
     cmp dword [0xffff0008], eax
     jl $delay_loop
     ret
-
