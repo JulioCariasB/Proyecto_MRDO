@@ -20,14 +20,68 @@ for_field:
     inc ecx
     jmp for_field
 
-end_for_field:  
+end_for_field:
+    mov ecx, 0
+
+upper:
+    cmp ecx, 320
+    je end_upper
+    mov edx, 0xb800
+    add edx, ecx
+    mov dword [edx], 0x0
+    inc ecx
+    jmp upper
+
+end_upper:
+    mov ecx, 28 ;row
+    mov edx, 0  ;col
+
+bottom:
+    cmp edx, 160
+    je end_bottom
+    mov esi, ecx ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    
+    mov ebx, 0
+    mov dword [esi], ebx
+    inc edx
+    jmp bottom
+
+end_bottom:
+    mov ecx, 0 ;row
+    mov edx, 39  ;col
+
+middle:
+    cmp ecx, 29
+    je end_middle
+    mov esi, ecx ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    
+    mov ebx, 0
+    mov dword [esi], ebx
+    inc ecx
+    jmp middle
+
+end_middle:
+
     mov dword [ebp-4], 0x44024401 ; Current mr_do mitad arriba
     mov dword [ebp-8], 0x44024401 ; Current mr_do mitad abajo
     mov ecx, dword[ebp+8]
     mov dword [ebp-12], ecx ;ultima row
     mov ecx, dword[ebp+12]
     mov dword [ebp-16], ecx ;ultima Column
-    
    
 $loop:
     ;borrado mitad arriba
@@ -141,7 +195,7 @@ $test_down:
    
     mov dword [ebp-4], 0x44024401 ; mr_do up mitad arriba
     mov dword [ebp-8], 0x44024401 ; mr_do up mitad abajo
-    cmp dword [ebp+ 8], 29  ; collipsion upper wall
+    cmp dword [ebp+ 8], 28  ; collipsion upper wall
     je $loop
     add dword [ebp+ 8], 1
     jmp $loop
@@ -191,3 +245,4 @@ $delay_loop:
     cmp dword [0xffff0008], eax
     jl $delay_loop
     ret
+
