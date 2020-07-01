@@ -1,5 +1,5 @@
 start:
-    push 40
+    push 135 ;frutas
     push 10
     push 10
     call show_mr_do
@@ -224,6 +224,113 @@ $loop:
     mov ebx, 0
     mov dword [esi], ebx
 
+    ;revisar si hay una fruta ahi
+
+    mov esi, dword [ebp+8] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword [ebp+12] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, dword [esi]
+
+    cmp ebx,0x0a360a36
+    jne check_down
+    sub dword [ebp+16], 1
+    cmp dword [ebp+16], 0
+    je restart_mrdo
+
+check_down:
+    mov esi, dword [ebp+8] ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword [ebp+12] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, dword [esi]
+
+    cmp ebx,0x0a360a36
+    jne check_left_upper
+    sub dword [ebp+16], 1
+    cmp dword [ebp+16], 0
+    je restart_mrdo
+
+check_left_upper:
+    mov esi, dword [ebp+8] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword [ebp+12] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, dword [esi]
+    shr ebx, 16
+
+    cmp bx,0x0a36
+    jne check_left_bottom
+    sub dword [ebp+16], 1
+    cmp dword [ebp+16], 0
+    je restart_mrdo
+check_left_bottom:
+    mov esi, dword [ebp+8] ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword [ebp+12] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, dword [esi]
+    shl ebx, 16
+
+    cmp bx,0x0a36
+    jne check_right_upper
+    sub dword [ebp+16], 1
+    cmp dword [ebp+16], 0
+    je restart_mrdo
+
+check_right_upper:
+    mov esi, dword [ebp+8] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword [ebp+12] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, dword [esi]
+
+    cmp bx,0x0a36
+    jne check_right_bottom
+    sub dword [ebp+16], 1
+    cmp dword [ebp+16], 0
+    je restart_mrdo
+check_right_bottom:
+    mov esi, dword [ebp+8] ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword [ebp+12] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, dword [esi]
+
+    cmp bx,0x0a36
+    jne render_mrdo
+    sub dword [ebp+16], 1
+    cmp dword [ebp+16], 0
+    je restart_mrdo
+
+render_mrdo:
     ;mitad arriba
     mov esi, dword [ebp+8] ; Row
     mov ebx, esi
@@ -349,8 +456,7 @@ $end_loop:
     #show al binary
     mov esp, ebp
     pop ebp
-    ret
-       
+    ret   
 delay:
     mov eax, dword [0xffff0008]
     add eax, dword [esp + 4]
@@ -358,3 +464,11 @@ $delay_loop:
     cmp dword [0xffff0008], eax
     jl $delay_loop
     ret
+
+;RESTART GAMEEEEEE
+restart_mrdo:
+    mov dword [ebp+8], 10 ;RESTART ROW
+    mov dword [ebp+12], 10 ;RESTART ROW
+    mov dword [ebp+16], 120 ;COUNT FRUIT
+    mov ecx, 0xb800
+    jmp for_field
