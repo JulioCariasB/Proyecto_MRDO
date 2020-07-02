@@ -137,20 +137,11 @@ end_fruit_outer4:
     mov ecx, 0
 
 upper:
-    cmp ecx, 320
-    je end_upper
-    mov edx, 0xb800
-    add edx, ecx
-    mov dword [edx], 0x0
-    inc ecx
-    jmp upper
-
-end_upper:
-    mov ecx, 28 ;row
+    mov ecx, 14 ;row
     mov edx, 0  ;col
 
 bottom:
-    cmp edx, 160
+    cmp edx, 159
     je end_bottom
     mov esi, ecx ; Row
     mov ebx, esi
@@ -171,7 +162,7 @@ end_bottom:
     mov edx, 39  ;col
 
 middle:
-    cmp ecx, 29
+    cmp ecx, 30
     je end_middle
     mov esi, ecx ; Row
     mov ebx, esi
@@ -194,7 +185,13 @@ end_middle:
     mov ecx, dword[ebp+8]
     mov dword [ebp-12], ecx ;ultima row
     mov ecx, dword[ebp+12]
-    mov dword [ebp-16], ecx ;ultima Column
+    mov dword [ebp-20], 0 ;row enemigo 1
+    mov dword [ebp-24], 0 ;direccion 0 abajo 1 arriba
+    mov dword [ebp-28], 10 ;row enemigo 2
+    mov dword [ebp-32], 0 ;direccion 0 abajo 1 arriba    
+    mov dword [ebp-36], 20 ;row enemigo 2
+    mov dword [ebp-40], 0 ;direccion 0 abajo 1 arriba
+
    
 $loop:
     ;borrado mitad arriba
@@ -357,12 +354,266 @@ render_mrdo:
     
     mov ebx, dword [ebp-8]
     mov dword [esi], ebx
- 
+   
+$test_keys:
     push 50
     call delay
     add esp, 4
-   
-$test_keys:
+;BORRAR ENEMIGO 1
+    mov esi, dword[ebp-20] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+    
+    mov esi, dword[ebp-20] ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+
+    cmp dword[ebp-24], 1
+    je enemy_to_up
+    cmp dword[ebp-20], 28
+    je change_dir_up_1
+    add dword[ebp-20], 1
+    jmp draw_enemy_1
+change_dir_up_1:
+    mov dword[ebp-24], 1
+enemy_to_up:
+    cmp dword[ebp-20], 0
+    je change_dir_down_1
+    sub dword[ebp-20], 1
+    jmp draw_enemy_1
+change_dir_down_1:
+    mov dword[ebp-24], 0 
+
+draw_enemy_1:
+    mov esi, dword[ebp-20] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x11091109
+    mov dword [esi], ebx
+    
+    mov esi, dword[ebp-20] ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x11091109
+    mov dword [esi], ebx
+
+;BORRAR ENEMIGO 2
+    mov esi, dword[ebp-28] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+    
+    mov esi, dword[ebp-28] ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+
+    cmp dword[ebp-32], 1
+    je enemy_to_up_2
+    cmp dword[ebp-28], 28
+    je change_dir_up_2
+    add dword[ebp-28], 1
+    jmp draw_enemy_2
+change_dir_up_2:
+    mov dword[ebp-32], 1
+enemy_to_up_2:
+    cmp dword[ebp-28], 0
+    je change_dir_down_2
+    sub dword[ebp-28], 1
+    jmp draw_enemy_2
+change_dir_down_2:
+    mov dword[ebp-32], 0 
+
+draw_enemy_2:
+
+    mov esi, dword[ebp-28] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x11091109
+    mov dword [esi], ebx
+    
+    mov esi, dword[ebp-28] ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x11091109
+    mov dword [esi], ebx
+
+;BORRAR ENEMIGO 3
+    mov esi, dword[ebp-36] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+    
+    mov esi, dword[ebp-36] ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+
+    cmp dword[ebp-40], 1
+    je enemy_to_up_3
+    cmp dword[ebp-36], 28
+    je change_dir_up_3
+    add dword[ebp-36], 1
+    jmp draw_enemy_3
+change_dir_up_3:
+    mov dword[ebp-40], 1
+enemy_to_up_3:
+    cmp dword[ebp-36], 0
+    je change_dir_down_3
+    sub dword[ebp-36], 1
+    jmp draw_enemy_3
+change_dir_down_3:
+    mov dword[ebp-40], 0 
+
+draw_enemy_3:
+
+    mov esi, dword[ebp-36] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x11091109 ;ENEMIGO
+    mov dword [esi], ebx
+    
+    mov esi, dword[ebp-36] ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, edx ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x11091109
+    mov dword [esi], ebx
+
+check_enemy_down:
+    mov esi, dword [ebp+8] ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword [ebp+12] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, dword [esi]
+
+    cmp ebx,0x11091109
+    jne check_enemy_up
+    je restart_mrdo
+
+check_enemy_up:
+    mov esi, dword [ebp+8] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword [ebp+12] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, dword [esi]
+
+    cmp ebx,0x11091109 
+    jne check_enemy_up_1
+    je restart_mrdo
+
+check_enemy_up_1:
+    mov esi, dword [ebp+8] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword [ebp+12] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, dword [esi]
+
+    cmp ebx,0x44021109 
+    jne check_enemy_up_2
+    je restart_mrdo
+
+check_enemy_up_2:
+    mov esi, dword [ebp+8] ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword [ebp+12] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, dword [esi]
+
+    cmp ebx,0x11094401
+    je restart_mrdo
+    ;inc ecx
+
     mov ah, byte [0xffff0004] ; Keypad
     mov al, ah
 
