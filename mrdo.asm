@@ -40,7 +40,7 @@ fruit_inner1:
     shl esi, 1
     add esi, 0xb800
     
-    mov ebx, 0x0a360a36 ;FRUta
+    mov ebx, 0xa411a411 ;FRUta
     mov dword [esi], ebx
     inc edx
     jmp fruit_inner1
@@ -68,7 +68,7 @@ fruit_inner2:
     shl esi, 1
     add esi, 0xb800
     
-    mov ebx, 0x0a360a36 ;FRUta
+    mov ebx, 0xa411a411 ;FRUta
     mov dword [esi], ebx
     inc edx
     jmp fruit_inner2
@@ -96,7 +96,7 @@ fruit_inner3:
     shl esi, 1
     add esi, 0xb800
     
-    mov ebx, 0x0a360a36 ;FRUta
+    mov ebx, 0xa411a411 ;FRUta
     mov dword [esi], ebx
     inc edx
     jmp fruit_inner3
@@ -124,7 +124,7 @@ fruit_inner4:
     shl esi, 1
     add esi, 0xb800
     
-    mov ebx, 0x0a360a36 ;FRUta
+    mov ebx, 0xa411a411 ;FRUta
     mov dword [esi], ebx
     inc edx
     jmp fruit_inner4
@@ -180,8 +180,8 @@ middle:
 
 end_middle:
 
-    mov dword [ebp-4], 0x44024401 ; Current mr_do mitad arriba
-    mov dword [ebp-8], 0x44024401 ; Current mr_do mitad abajo
+    mov dword [ebp-4], 0x03020301 ; Current mr_do mitad arriba
+    mov dword [ebp-8], 0x03040303 ; Current mr_do mitad abajo
     mov ecx, dword[ebp+8]
     mov dword [ebp-12], ecx ;ultima row
     mov ecx, dword[ebp+12]
@@ -233,7 +233,7 @@ $loop:
     add esi, 0xb800
     mov ebx, dword [esi]
 
-    cmp ebx,0x0a360a36
+    cmp ebx,0xa411a411
     jne check_down
     sub dword [ebp+16], 1
     cmp dword [ebp+16], 0
@@ -251,7 +251,7 @@ check_down:
     add esi, 0xb800
     mov ebx, dword [esi]
 
-    cmp ebx,0x0a360a36
+    cmp ebx,0xa411a411
     jne check_left_upper
     sub dword [ebp+16], 1
     cmp dword [ebp+16], 0
@@ -269,7 +269,7 @@ check_left_upper:
     mov ebx, dword [esi]
     shr ebx, 16
 
-    cmp bx,0x0a36
+    cmp bx,0xa411
     jne check_left_bottom
     sub dword [ebp+16], 1
     cmp dword [ebp+16], 0
@@ -287,7 +287,7 @@ check_left_bottom:
     mov ebx, dword [esi]
     shl ebx, 16
 
-    cmp bx,0x0a36
+    cmp bx,0xa411
     jne check_right_upper
     sub dword [ebp+16], 1
     cmp dword [ebp+16], 0
@@ -304,7 +304,7 @@ check_right_upper:
     add esi, 0xb800
     mov ebx, dword [esi]
 
-    cmp bx,0x0a36
+    cmp bx,0xa411
     jne check_right_bottom
     sub dword [ebp+16], 1
     cmp dword [ebp+16], 0
@@ -321,7 +321,7 @@ check_right_bottom:
     add esi, 0xb800
     mov ebx, dword [esi]
 
-    cmp bx,0x0a36
+    cmp bx,0xa411
     jne render_mrdo
     sub dword [ebp+16], 1
     cmp dword [ebp+16], 0
@@ -567,7 +567,7 @@ check_enemy_down:
 
     cmp ebx,0x11091109
     jne check_enemy_up
-    je restart_mrdo
+    je lose
 
 check_enemy_up:
     mov esi, dword [ebp+8] ; Row
@@ -582,7 +582,7 @@ check_enemy_up:
 
     cmp ebx,0x11091109 
     jne check_enemy_up_1
-    je restart_mrdo
+    je lose
 
 check_enemy_up_1:
     mov esi, dword [ebp+8] ; Row
@@ -597,7 +597,7 @@ check_enemy_up_1:
 
     cmp ebx,0x44021109 
     jne check_enemy_up_2
-    je restart_mrdo
+    je lose
 
 check_enemy_up_2:
     mov esi, dword [ebp+8] ; Row
@@ -611,7 +611,7 @@ check_enemy_up_2:
     mov ebx, dword [esi]
 
     cmp ebx,0x11094401
-    je restart_mrdo
+    je lose
     ;inc ecx
 
     mov ah, byte [0xffff0004] ; Keypad
@@ -627,8 +627,8 @@ check_enemy_up_2:
     mov ecx, dword[ebp+12]
     mov dword [ebp-16], ecx ;ultima Column
     
-    mov dword [ebp-4], 0x44024401 ; mr_do left mitad arriba
-    mov dword [ebp-8], 0x44024401 ; mr_do left mitad abajo
+    mov dword [ebp-4], 0x030e030d ; mr_do left mitad arriba
+    mov dword [ebp-8], 0x0310030f ; mr_do left mitad abajo
     cmp dword [ebp+ 12], 0  ; collipsion left wall
     je $loop
 
@@ -646,8 +646,8 @@ $test_right:
     mov ecx, dword[ebp+12]
     mov dword [ebp-16], ecx ;ultima Column
    
-    mov dword [ebp-4], 0x44024401 ; mr_do right mitad arriba
-    mov dword [ebp-8], 0x44024401 ; mr_do right mitad abajo
+    mov dword [ebp-4], 0x030a0309 ; mr_do right mitad arriba
+    mov dword [ebp-8], 0x030c030b ; mr_do right mitad abajo
     cmp dword [ebp+ 12], 79  ; collipsion right wall
     je $loop
     add dword [ebp+ 12], 1
@@ -664,8 +664,8 @@ $test_down:
     mov ecx, dword[ebp+12]
     mov dword [ebp-16], ecx ;ultima Column
    
-    mov dword [ebp-4], 0x44024401 ; mr_do up mitad arriba
-    mov dword [ebp-8], 0x44024401 ; mr_do up mitad abajo
+    mov dword [ebp-4], 0x03020301 ; mr_do up mitad arriba
+    mov dword [ebp-8], 0x03040303 ; mr_do up mitad abajo
     cmp dword [ebp+ 8], 28  ; collipsion upper wall
     je $loop
     add dword [ebp+ 8], 1
@@ -682,8 +682,8 @@ $test_up:
     mov ecx, dword[ebp+12]
     mov dword [ebp-16], ecx ;ultima Column
    
-    mov dword [ebp-4], 0x44024401 ; mr_do dpwn mitad arriba
-    mov dword [ebp-8], 0x44024401 ; mr_do dpwn mitad abajo
+    mov dword [ebp-4], 0x03060305 ; mr_do dpwn mitad arriba
+    mov dword [ebp-8], 0x03080307 ; mr_do dpwn mitad abajo
     cmp dword [ebp+ 8], 0  ; collipsion down wall
     je $loop
     sub dword [ebp+ 8], 1
@@ -717,6 +717,22 @@ $delay_loop:
     ret
 
 ;RESTART GAMEEEEEE
+lose:
+    mov ecx, 0xb800
+for_lose:
+    cmp ecx, 0xcabf
+    je end_for_lose
+    mov dword [ecx], 0x442e442e
+    inc ecx
+    jmp for_lose
+
+end_for_lose:   
+    push 1000
+    call delay
+    add esp, 4
+    mov ecx, 2
+    mov edx, 2
+
 restart_mrdo:
     mov dword [ebp+8], 10 ;RESTART ROW
     mov dword [ebp+12], 10 ;RESTART ROW
