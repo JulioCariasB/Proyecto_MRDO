@@ -193,9 +193,9 @@ end_middle:
     mov dword [ebp-40], 0 ;direccion 0 abajo 1 arriba
     mov dword [ebp-44], 0 ;col enemigo 4
     mov dword [ebp-48], 0 ;direccion 0 abajo 1 arriba
-    mov dword [ebp-52], 10 ;col enemigo 5
+    mov dword [ebp-52], 12 ;col enemigo 5
     mov dword [ebp-56], 0 ;direccion 0 abajo 1 arriba
-    mov dword [ebp-60], 20 ;col enemigo 6
+    mov dword [ebp-60], 24 ;col enemigo 6
     mov dword [ebp-64], 0 ;direccion 0 abajo 1 arriba
 
    
