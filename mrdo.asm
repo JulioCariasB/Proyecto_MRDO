@@ -1,5 +1,5 @@
 start:
-    push 135 ;frutas
+    push 145 ;frutas
     push 10
     push 10
     call show_mr_do
@@ -408,7 +408,7 @@ draw_enemy_1:
     add esi, edx ; Col
     shl esi, 1
     add esi, 0xb800
-    mov ebx, 0x11091109
+    mov ebx, 0x0f130f12
     mov dword [esi], ebx
     
     mov esi, dword[ebp-20] ; Row
@@ -420,7 +420,7 @@ draw_enemy_1:
     add esi, edx ; Col
     shl esi, 1
     add esi, 0xb800
-    mov ebx, 0x11091109
+    mov ebx, 0x0f150f14
     mov dword [esi], ebx
 
 ;BORRAR ENEMIGO 2
@@ -473,7 +473,7 @@ draw_enemy_2:
     add esi, edx ; Col
     shl esi, 1
     add esi, 0xb800
-    mov ebx, 0x11091109
+    mov ebx, 0x0f130f12
     mov dword [esi], ebx
     
     mov esi, dword[ebp-28] ; Row
@@ -485,7 +485,7 @@ draw_enemy_2:
     add esi, edx ; Col
     shl esi, 1
     add esi, 0xb800
-    mov ebx, 0x11091109
+    mov ebx, 0x0f150f14
     mov dword [esi], ebx
 
 ;BORRAR ENEMIGO 3
@@ -538,7 +538,7 @@ draw_enemy_3:
     add esi, edx ; Col
     shl esi, 1
     add esi, 0xb800
-    mov ebx, 0x11091109 ;ENEMIGO
+    mov ebx, 0x0f130f12 ;ENEMIGO
     mov dword [esi], ebx
     
     mov esi, dword[ebp-36] ; Row
@@ -550,7 +550,7 @@ draw_enemy_3:
     add esi, edx ; Col
     shl esi, 1
     add esi, 0xb800
-    mov ebx, 0x11091109
+    mov ebx, 0x0f150f14
     mov dword [esi], ebx
 
 check_enemy_down:
@@ -565,7 +565,7 @@ check_enemy_down:
     add esi, 0xb800
     mov ebx, dword [esi]
 
-    cmp ebx,0x11091109
+    cmp ebx,0x0f130f12
     jne check_enemy_up
     je lose
 
@@ -580,7 +580,7 @@ check_enemy_up:
     add esi, 0xb800
     mov ebx, dword [esi]
 
-    cmp ebx,0x11091109 
+    cmp ebx,0x0f150f14 
     jne check_enemy_up_1
     je lose
 
