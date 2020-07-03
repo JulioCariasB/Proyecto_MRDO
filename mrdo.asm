@@ -189,8 +189,14 @@ end_middle:
     mov dword [ebp-24], 0 ;direccion 0 abajo 1 arriba
     mov dword [ebp-28], 10 ;row enemigo 2
     mov dword [ebp-32], 0 ;direccion 0 abajo 1 arriba    
-    mov dword [ebp-36], 20 ;row enemigo 2
+    mov dword [ebp-36], 20 ;row enemigo 3
     mov dword [ebp-40], 0 ;direccion 0 abajo 1 arriba
+    mov dword [ebp-44], 0 ;col enemigo 4
+    mov dword [ebp-48], 0 ;direccion 0 abajo 1 arriba
+    mov dword [ebp-52], 10 ;col enemigo 5
+    mov dword [ebp-56], 0 ;direccion 0 abajo 1 arriba
+    mov dword [ebp-60], 20 ;col enemigo 6
+    mov dword [ebp-64], 0 ;direccion 0 abajo 1 arriba
 
    
 $loop:
@@ -553,6 +559,200 @@ draw_enemy_3:
     mov ebx, 0x0f150f14
     mov dword [esi], ebx
 
+;BORRAR ENEMIGO 4
+    mov esi, 14 ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-44] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+    
+    mov esi, 14 ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-44] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+
+    cmp dword[ebp-48], 1
+    je enemy_to_up_4
+    cmp dword[ebp-44], 78
+    je change_dir_up_4
+    add dword[ebp-44], 1
+    jmp draw_enemy_4
+change_dir_up_4:
+    mov dword[ebp-48], 1
+enemy_to_up_4:
+    cmp dword[ebp-44], 0
+    je change_dir_down_4
+    sub dword[ebp-44], 1
+    jmp draw_enemy_4
+change_dir_down_4:
+    mov dword[ebp-48], 0 
+
+draw_enemy_4:
+
+    mov esi, 14 ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-44] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x0f130f12 ;ENEMIGO
+    mov dword [esi], ebx
+    
+    mov esi, 14 ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-44] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x0f150f14
+    mov dword [esi], ebx
+
+;BORRAR ENEMIGO 5
+    mov esi, 14 ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-52] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+    
+    mov esi, 14 ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-52] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+
+    cmp dword[ebp-56], 1
+    je enemy_to_up_5
+    cmp dword[ebp-52], 78
+    je change_dir_up_5
+    add dword[ebp-52], 1
+    jmp draw_enemy_5
+change_dir_up_5:
+    mov dword[ebp-56], 1
+enemy_to_up_5:
+    cmp dword[ebp-52], 0
+    je change_dir_down_5
+    sub dword[ebp-52], 1
+    jmp draw_enemy_5
+change_dir_down_5:
+    mov dword[ebp-56], 0 
+
+draw_enemy_5:
+
+    mov esi, 14 ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-52] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x0f130f12 ;ENEMIGO
+    mov dword [esi], ebx
+    
+    mov esi, 14 ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-52] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x0f150f14
+    mov dword [esi], ebx
+
+;BORRAR ENEMIGO 6
+    mov esi, 14 ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-60] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+    
+    mov esi, 14 ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-60] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0
+    mov dword [esi], ebx
+
+    cmp dword[ebp-64], 1
+    je enemy_to_up_6
+    cmp dword[ebp-60], 78
+    je change_dir_up_6
+    add dword[ebp-60], 1
+    jmp draw_enemy_6
+change_dir_up_6:
+    mov dword[ebp-64], 1
+enemy_to_up_6:
+    cmp dword[ebp-60], 0
+    je change_dir_down_6
+    sub dword[ebp-60], 1
+    jmp draw_enemy_6
+change_dir_down_6:
+    mov dword[ebp-64], 0 
+
+draw_enemy_6:
+
+    mov esi, 14 ; Row
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-60] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x0f130f12 ;ENEMIGO
+    mov dword [esi], ebx
+    
+    mov esi, 14 ; Row
+    inc esi
+    mov ebx, esi
+    shl esi, 6
+    shl ebx, 4
+    add esi, ebx
+    add esi, dword[ebp-60] ; Col
+    shl esi, 1
+    add esi, 0xb800
+    mov ebx, 0x0f150f14
+    mov dword [esi], ebx
 check_enemy_down:
     mov esi, dword [ebp+8] ; Row
     inc esi
@@ -595,7 +795,7 @@ check_enemy_up_1:
     add esi, 0xb800
     mov ebx, dword [esi]
 
-    cmp ebx,0x44021109 
+    cmp ebx,0x0f130f12
     jne check_enemy_up_2
     je lose
 
@@ -610,7 +810,7 @@ check_enemy_up_2:
     add esi, 0xb800
     mov ebx, dword [esi]
 
-    cmp ebx,0x11094401
+    cmp ebx,0x0f130f12
     je lose
     ;inc ecx
 
